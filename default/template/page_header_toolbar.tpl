@@ -165,7 +165,7 @@
             {if isset($header_tabs)}
                 {foreach $header_tabs as $t}
                     <li>
-                        <a href="#">{$t.meta_title}</a>
+                        <a href="{$t.href}" {if $t.active == 1}class="current"{/if}>{$t.meta_title}</a>
                     </li>
                 {/foreach}
             {/if}
