@@ -8,6 +8,19 @@
 			{l s='Παρακαλούμε περιμένετε. Φορτώνει'}...
 		</div>
 	</div>
+	{if isset($errors) and !empty($errors)}
+		<div class="alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true"><i class="material-icons">close</i></span>
+			</button>
+			<div class="alert-text">
+				{foreach $errors as $e}
+					<p>{$e}</p>
+				{/foreach}
+			</div>
+		</div>
+	{/if}
+	<div class="tp-ajax-result col-lg-12 col-xs-12"></div>
     <div class="framework-category-ajax-form ajax-form col-lg-12" style="display:block;">
         <form action="{$links->admin->categories->add}" method="post" data-pure-link="{$links->admin->categories->url}" data-refresh="1">
             {foreach $fields->category as $f}
@@ -17,8 +30,8 @@
                             <label class="inactive" id="meta_title" for="display">
                                 {l s='Επιλέξτε κατηγορία'}
                             </label>
-                            <i class="fas fa-chevron-down"></i>
-                            <i class="fas fa-chevron-up hidden"></i>
+                            <i class="fas fa-chevron-down down"></i>
+                            <i class="fas fa-chevron-up up"></i>
                             <div class="refresh-categories menu">
                                 {foreach $tree as $c}
                                     {if $c.parent < 1}
