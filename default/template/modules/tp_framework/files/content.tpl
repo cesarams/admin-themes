@@ -63,7 +63,7 @@
             {/foreach}
             <input type="hidden" value="{$links->admin->categories->token}" name="token">
             <div class="submit">
-				<button type="submit" class="tp-ajax-submit" data-action="CategoryAdd">{l s='Προσθήκη κατηγορίας'}</button>
+				<button type="submit" class="tp-ajax-submit" data-action="Add">{l s='Προσθήκη κατηγορίας'}</button>
 			</div>
             <div class="languages replace-select">
 				<div class="container">

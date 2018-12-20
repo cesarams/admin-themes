@@ -502,7 +502,7 @@ $(document).ready(function() {
         ajax: true,
         controller: 'AdminFrameworkCategories',
         data: data,
-        action: 'CategoryAdd',
+        action: $(this).attr('data-action'),
         token: form.find('input[name="token"]').val()
       },
       success: function(data)
