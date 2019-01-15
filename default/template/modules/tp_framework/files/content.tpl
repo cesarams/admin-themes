@@ -83,4 +83,92 @@
 			</div>
         </form>
 	</div>
+	<div class="main">
+		<form method="post" action="" data-pure-link="{$links->admin->categories->url}" class="update-files-form">
+			<div class="files-browser" data-current-category="{if isset($category)}{$category->id}{else}0{/if}">
+				{if isset($category) and $category->id > 0}
+					<div class="col-lg-2">
+						<div class="up panel">
+							<div class="image">
+								<i class="fas fa-ellipsis-h fa-10x"></i>
+							</div>
+							<div class="meta-title">
+								<a class="view-category" data-category="{$parent->id}">
+									{$parent->meta_title}
+								</a>
+							</div>
+						</div>
+					</div>
+				{/if}
+				{assign var=x value=0}
+				{foreach $category->children as $c}
+					<div class="col-lg-2">
+						<div class="category check-file panel">
+							<input type="checkbox" name="check-category[{$x}]" value="{$c.id_tp_framework_category}" class="check-category">
+							<div class="image">
+								<i class="fas fa-folder-open fa-4x"></i>
+							</div>
+							<div class="meta-title">
+								<a class="view-category" data-category="{$c.id_tp_framework_category}">
+									{$c.meta_title}
+								</a>
+							</div>
+						</div>
+					</div>
+					{assign var=x value=$x+1}
+				{/foreach}
+				<input type="hidden" name="move-to-category" class="move-to-category">
+			</div>
+			<div class="footer toolbar">
+				<div class="panel">
+					<div class="replace-select field col-lg-4 col-sm-6">
+						<div class="container">
+							<label for="view-cateogory">
+								{l s='Επιλέξτε κατηγορία'}
+							</label>
+							<i class="fas fa-chevron-down down"></i>
+							<i class="fas fa-chevron-up up"></i>
+							<div class="view-category menu">
+								{foreach $tree as $c}
+									<div data-value="{$c.id_tp_framework_category}">
+										{$c.meta_title}
+									</div>
+								{/foreach}
+							</div>
+						</div>
+					</div>
+					<div class="replace-select field col-lg-4 col-sm-6">
+						<div class="container">
+							<label for="move-to-cateogory">
+								{l s='Μετακίνηση σε κατηγορία'}
+							</label>
+							<i class="fas fa-chevron-down down"></i>
+							<i class="fas fa-chevron-up up"></i>
+							<div class="move-to-category menu">
+								{foreach $tree as $c}
+									<div data-value="{$c.id_tp_framework_category}">
+										{$c.meta_title}
+									</div>
+								{/foreach}
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6">
+						<div class="update-selected-files button">
+							<a href="#" title="{l s='Ενημέρωση'}">
+								<i class="fas fa-cogs"></i>
+								<label for="">{l s='Ενημέρωση'}</label>
+							</a>
+						</div>
+						<div class="delete-selected-files button">
+							<a href="#" title="{l s='Διαγραφή'}">
+								<i class="fas fa-trash"></i>
+								<label for="">{l s='Διαγραφή'}</label>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>

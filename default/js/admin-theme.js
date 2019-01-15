@@ -441,6 +441,15 @@ $(document).ready(function() {
   * Custom tapanda.gr code -- Start
   */
 
+  /**
+  *
+  */
+  $('.new-framework-category-ajax').on('click', function(e)
+  {
+    e.preventDefault();
+    $('.framework-category-ajax-form').slideToggle();
+  });
+
   /*
   * It toggles the "active" class in custom dropdown menus for font awesome
   * to operate properly
