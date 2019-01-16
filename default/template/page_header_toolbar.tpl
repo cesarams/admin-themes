@@ -89,7 +89,7 @@
                      class="toolbar_btn {if isset($btn.target) && $btn.target} _blank{/if} pointer"{if isset($btn.href)} href="{$btn.href|escape}"{/if}
                      title="{if isset($btn.help)}{$btn.help}{else}{$btn.desc|escape}{/if}"{if isset($btn.js) && $btn.js} onclick="{$btn.js}"{/if}{if isset($btn.modal_target) && $btn.modal_target} data-target="{$btn.modal_target}" data-toggle="modal"{/if}{if isset($btn.help)} data-toggle="tooltip" data-placement="bottom"{/if}>
                     <i
-                      class="{if isset($btn.icon)}{$btn.icon|escape}{else}process-icon-{if isset($btn.imgclass)}{$btn.imgclass|escape}{else}{$k}{/if}{/if}{if isset($btn.class)} {$btn.class|escape}{/if}"></i>
+                      class="{if isset($btn.icon)}{$btn.icon|escape} {if isset($btn.size)}fa-{$btn.size}x {/if}{else}process-icon-{if isset($btn.imgclass)}{$btn.imgclass|escape}{else}{$k}{/if}{/if}{if isset($btn.class)} {$btn.class|escape}{/if}"></i>
                     <div{if isset($btn.force_desc) && $btn.force_desc == true } class="locked"{/if}>{$btn.desc|escape}</div>
                   </a>
                 </li>
@@ -105,14 +105,6 @@
                   <i
                     class="{if isset($toolbar_btn['modules-list'].icon)}{$toolbar_btn['modules-list'].icon}{else}process-icon-{if isset($toolbar_btn['modules-list'].imgclass)}{$toolbar_btn['modules-list'].imgclass}{else}modules-list{/if}{/if}"></i>
                   <div{if isset($toolbar_btn['modules-list'].force_desc) && $toolbar_btn['modules-list'].force_desc == true } class="locked"{/if}>{$toolbar_btn['modules-list'].desc}</div>
-                </a>
-              </li>
-            {/if}
-            {if isset($help_link)}
-              <li>
-                <a class="toolbar_btn btn-help" href="{$help_link|escape}" title="{l s='Help' d='Admin.Global'}">
-                  <i class="process-icon-help"></i>
-                  <div>{l s='Help' d='Admin.Global'}</div>
                 </a>
               </li>
             {/if}
