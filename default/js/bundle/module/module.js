@@ -19,6 +19,7 @@ var AdminModuleController = function() {
   this.pstaggerInput = null;
   this.lastBulkAction = null;
   this.isUploadStarted = false;
+  this.baseAdminDir = '';
 
   /**
    * Loaded modules list.
@@ -174,11 +175,13 @@ var AdminModuleController = function() {
   };
 
   this.ajaxLoadPage = function() {
+    var token = window.location.search;
+    var urlToCall = this.baseAdminDir+'module/catalog/refresh' + token;
     var self = this;
 
     $.ajax({
       method: 'GET',
-      url: moduleURLs.catalogRefresh
+      url: urlToCall
     }).done(function (response) {
       if (response.status === true) {
         if (typeof response.domElements === 'undefined') response.domElements = null;
@@ -509,7 +512,7 @@ var AdminModuleController = function() {
 
     // @see: dropzone.js
     var dropzoneOptions = {
-      url: moduleURLs.moduleImport,
+      url: 'import' + window.location.search,
       acceptedFiles: '.zip, .tar',
       // The name that will be used to transfer the file
       paramName: 'file_uploaded',
@@ -564,7 +567,7 @@ var AdminModuleController = function() {
         self.animateEndUpload(function() {
             if (result.status === true) {
               if (result.is_configurable === true) {
-                var configureLink = moduleURLs.configurationPage.replace('1', result.module_name);
+                var configureLink = self.baseAdminDir + 'module/manage/action/configure/' + result.module_name + window.location.search;
                 $(self.moduleImportSuccessConfigureBtnSelector).attr('href', configureLink);
                 $(self.moduleImportSuccessConfigureBtnSelector).show();
               }
@@ -640,6 +643,13 @@ var AdminModuleController = function() {
 
   this.loadVariables = function () {
     this.initCurrentDisplay();
+
+    // If index.php found in the current URL, we need it also in the baseAdminDir
+    //noinspection JSUnresolvedVariable
+    this.baseAdminDir = baseAdminDir;
+    if (window.location.href.indexOf('index.php') != -1) {
+      this.baseAdminDir += 'index.php/';
+    }
   };
 
   this.getModuleItemSelector = function () {
@@ -653,28 +663,23 @@ var AdminModuleController = function() {
    * @return void
    */
   this.getNotificationsCount = function () {
-    var urlToCall = moduleURLs.notificationsCount;
+    var destinationTab = $("#subtab-AdminModulesNotifications");
+    if (destinationTab.length === 0) {
+        return;
+    }
+    var token = window.location.search;
+    var urlToCall = this.baseAdminDir+'module/notifications/count' + token;
 
-    $.getJSON(
-        urlToCall,
-        this.updateNotificationsCount
-    ).fail(function() {
+    $.getJSON(urlToCall, function(badge) {
+        // TODO: This HTML code comes from an already specific template.
+        // To be moved in a template, with generic classes for badges
+        destinationTab.append('<span class="notification-container">\
+            <span class="notification-counter">'+badge.count+'</span>\
+          </span>\
+        ');
+    }).fail(function() {
         console.error('Could not retrieve module notifications count.');
     });
-  };
-  
-  this.updateNotificationsCount = function(badge) {
-    var destinationTabs = {
-        'to_configure': $("#subtab-AdminModulesNotifications"),
-        'to_update': $("#subtab-AdminModulesUpdates"),
-    };
-    
-    for (var key in destinationTabs) {
-        if (destinationTabs[key].length === 0) {
-            continue;
-        }
-        destinationTabs[key].find('.notification-counter').text(badge[key]);
-    };
   };
 
   this.initAddonsSearch = function () {
@@ -754,6 +759,9 @@ var AdminModuleController = function() {
       'bulk-reset': 'reset'
     };
 
+    // char is used only to be easy to replace by the end of this function
+    var baseActionUrl = this.baseAdminDir + 'module/manage/action/@/';
+
     // Note no grid selector used yet since we do not needed it at dev time
     // Maybe useful to implement this kind of things later if intended to
     // use this functionality elsewhere but "manage my module" section
@@ -780,6 +788,7 @@ var AdminModuleController = function() {
         var moduleTechName = data.techName;
 
         var urlActionSegment = bulkActionToUrl[requestedBulkAction];
+        baseActionUrl.replace('@', urlActionSegment);
 
         if (typeof module_card_controller !== 'undefined') {
           // We use jQuery to get the specific link for this action. If found, we send it.

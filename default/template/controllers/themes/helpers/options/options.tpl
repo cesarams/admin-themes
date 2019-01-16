@@ -39,23 +39,21 @@
 										<div class="action-overlay"></div>
 										<div class="action-buttons">
 											<div class="btn-group">
-												<a href="{$link->getAdminLink('AdminThemes', true, [], ['action' => 'enableTheme', 'theme_name' => $theme->getName()|urlencode])|escape:'html':'UTF-8'}" class="btn btn-default">
+												<a href="{$link->getAdminLink('AdminThemes')|escape:'html':'UTF-8'}&amp;action=enableTheme&amp;theme_name={$theme->getName()|urlencode}" class="btn btn-default">
 													<i class="icon-check"></i> {l s='Use this theme'}
 												</a>
 
-												{if $field['can_delete_themes']}
-                          <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-caret-down"></i>&nbsp;
-                          </button>
+												<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+													<i class="icon-caret-down"></i>&nbsp;
+												</button>
+												<ul class="dropdown-menu">
+													<li>
+														<a href="{$link->getAdminLink('AdminThemes')|escape:'html':'UTF-8'}&amp;action=deleteTheme&amp;theme_name={$theme->getName()|urlencode}" title="{l s='Delete this theme'}" class="delete">
+															<i class="icon-trash"></i> {l s='Delete this theme'}
+														</a>
+													</li>
+												</ul>
 
-                          <ul class="dropdown-menu">
-                            <li>
-                              <a href="{$link->getAdminLink('AdminThemes', true, [], ['action' => 'deleteTheme', 'theme_name' => $theme->getName()|urlencode])|escape:'html':'UTF-8'}" title="{l s='Delete this theme'}" class="delete">
-                                <i class="icon-trash"></i> {l s='Delete this theme'}
-                              </a>
-                            </li>
-                          </ul>
-												{/if}
 											</div>
 										</div>
 									</div>
@@ -99,12 +97,12 @@
 						<p>{l s='Each page can use a different layout, choose it among the layouts bundled in your theme.'}</p>
 					</div>
 					<div class="col-sm-4 text-right">
-						<a class="btn btn-default" href="{$link->getAdminLink('AdminThemes', true, [], ['display' => 'configureLayouts'])}">
+						<a class="btn btn-default" href="{$link->getAdminLink('AdminThemes')}&display=configureLayouts">
 							<i class="icon icon-file"></i>
 							{l s='Choose layouts'}
 						</a>
 						{if $smarty.const._PS_MODE_DEV_}
-							<a class="btn btn-default" href="{$link->getAdminLink('AdminThemes', true, [], ['action' => 'resetToDefaults', 'theme_name' => $cur_theme->getName()])}">
+							<a class="btn btn-default" href="{$link->getAdminLink('AdminThemes')}&amp;action=resetToDefaults&amp;theme_name={$cur_theme->getName()}">
 								{l s='Reset to defaults'}
 							</a>
 						{/if}

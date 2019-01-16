@@ -30,7 +30,6 @@
 {/if}
 
 {$content}
-
 {if isset($url_prev)}
 	<script type="text/javascript">
 	$(document).ready(function () {

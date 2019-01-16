@@ -11,15 +11,8 @@
   vertical-align: middle;
   text-align: center;
   border: 2px solid $brand-primary;
-  cursor: pointer;
-  padding: 0;
-  margin: 0 5px 2px;
 
   &:after {
     content: '?'
-  }
-
-  &:focus {
-    outline: none;
   }
 }

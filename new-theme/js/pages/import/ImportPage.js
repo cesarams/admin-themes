@@ -28,8 +28,8 @@ import FormFieldToggle from "./FormFieldToggle";
 const $ = window.$;
 
 export default class ImportPage {
-  constructor() {
-    new FormFieldToggle();
+  init() {
+    new FormFieldToggle().init();
 
     $('.js-from-files-history-btn').on('click', () => this.showFilesHistoryHandler());
     $('.js-close-files-history-block-btn').on('click', () => this.closeFilesHistoryHandler());
@@ -38,20 +38,6 @@ export default class ImportPage {
     $('.js-import-file').on('change', () => this.uploadFile());
 
     this.toggleSelectedFile();
-    this.handleSubmit();
-  }
-
-  /**
-   * Handle submit and add confirm box in case the toggle button about
-   * deleting all entities before import is checked
-   */
-  handleSubmit() {
-    $('.js-import-form').on('submit', function() {
-      const $this = $(this);
-      if ($this.find('input[name="truncate"]:checked').val() === '1') {
-        return confirm(`${$this.data('delete-confirm-message')} ${$.trim($('#entity > option:selected').text().toLowerCase())}?`);
-      }
-    });
   }
 
   /**
@@ -214,9 +200,11 @@ export default class ImportPage {
     const data = new FormData();
     data.append('file', uploadedFile);
 
+    const url = $('.js-import-form').data('file-upload-url');
+
     $.ajax({
       type: 'POST',
-      url: $('.js-import-form').data('file-upload-url'),
+      url: url,
       data: data,
       cache: false,
       contentType: false,

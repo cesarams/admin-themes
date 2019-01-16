@@ -29,14 +29,14 @@ var PerformancePageUI = {
         var smartyCacheOptions = document.querySelectorAll('.smarty-cache-option');
         if (smartyCacheSelected && smartyCacheSelected.value === CACHE_ENABLED) {
           for(var i = 0; i < smartyCacheOptions.length; i++) {
-            smartyCacheOptions[i].classList.remove('d-none');
+            smartyCacheOptions[i].style.display = 'block';
           }
 
           return;
         }
 
       for(var i = 0; i < smartyCacheOptions.length; i++) {
-        smartyCacheOptions[i].classList.add('d-none');
+        smartyCacheOptions[i].style.display = 'none';
       }
     },
     displayCacheSystems: function() {
